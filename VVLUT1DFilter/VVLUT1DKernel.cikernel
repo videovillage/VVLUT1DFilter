@@ -1,0 +1,51 @@
+vec4 remapColor(vec4 value, vec4 inputLow, vec4 inputHigh, vec4 outputLow, vec4 outputHigh){
+    return outputLow + ((value - inputLow)*(outputHigh - outputLow))/(inputHigh - inputLow);
+}
+
+float remapFloat(float value, float inputLow, float inputHigh, float outputLow, float outputHigh){
+    return outputLow + ((value - inputLow)*(outputHigh - outputLow))/(inputHigh - inputLow);
+}
+
+float lerp1d(float beginning, float end, float value01) {
+    float range = end - beginning;
+    return beginning + range * value01;
+}
+
+kernel vec4 lut1DKernel(sampler src, sampler lut)
+{
+    vec4 inputColor = sample(src, samplerCoord(src));
+    
+    int lutSize = samplerSize(lut).x;
+    
+    vec4 colorRemappedToInterpolatedIndex = remapColor(inputColor, vec4(0.0, 0.0, 0.0, 0.0), vec4(1.0, 1.0, 1.0, 1.0), vec4(0.0, 0.0, 0.0, 0.0), vec4(lutSize, lutSize, lutSize, lutSize));
+    
+    float redBottomIndex = floor(colorRemappedToInterpolatedIndex.r);
+    float redTopIndex = ceil(colorRemappedToInterpolatedIndex.r);
+    
+    float greenBottomIndex = floor(colorRemappedToInterpolatedIndex.g);
+    float greenTopIndex = ceil(colorRemappedToInterpolatedIndex.g);
+    
+    float blueBottomIndex = floor(colorRemappedToInterpolatedIndex.b);
+    float blueTopIndex = ceil(colorRemappedToInterpolatedIndex.b);
+    
+    float alphaBottomIndex = floor(colorRemappedToInterpolatedIndex.a);
+    float alphaTopIndex = ceil(colorRemappedToInterpolatedIndex.a);
+    
+    float bottomRed = sample(lut, vec2(redBottomIndex, 0)).r;
+    float bottomGreen = sample(lut, vec2(greenBottomIndex, 0)).g;
+    float bottomBlue = sample(lut, vec2(blueBottomIndex, 0)).b;
+    float bottomAlpha = sample(lut, vec2(alphaBottomIndex, 0)).a;
+    
+    float topRed = sample(lut, vec2(redTopIndex, 0)).r;
+    float topGreen = sample(lut, vec2(greenTopIndex, 0)).g;
+    float topBlue = sample(lut, vec2(blueTopIndex, 0)).b;
+    float topAlpha = sample(lut, vec2(alphaTopIndex, 0)).a;
+    
+    float interpRed = lerp1d(bottomRed, topRed, (redTopIndex-colorRemappedToInterpolatedIndex.r)/(redTopIndex-redBottomIndex));
+    float interpGreen = lerp1d(bottomGreen, topGreen, (greenTopIndex-colorRemappedToInterpolatedIndex.g)/(greenTopIndex-greenBottomIndex));
+    float interpBlue = lerp1d(bottomBlue, topBlue, (blueTopIndex-colorRemappedToInterpolatedIndex.b)/(blueTopIndex-blueBottomIndex));
+    float interpAlpha = lerp1d(bottomAlpha, topAlpha, (alphaTopIndex-colorRemappedToInterpolatedIndex.a)/(alphaTopIndex-alphaBottomIndex));
+
+
+    return vec4(interpRed, interpGreen, interpBlue, 1.0);
+}

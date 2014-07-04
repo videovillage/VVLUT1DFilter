@@ -12,4 +12,7 @@
 
 @property (assign) IBOutlet NSWindow *window;
 
+@property (strong) NSImage *inputImage;
+@property (assign) IBOutlet NSView *imageWell;
+
 @end

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="5023" systemVersion="13A603" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="5056" systemVersion="13E28" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="5023"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="5056"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="NSApplication">
@@ -13,7 +13,8 @@
         <customObject id="-3" userLabel="Application"/>
         <customObject id="Voe-Tx-rLC" customClass="VVAppDelegate">
             <connections>
-                <outlet property="window" destination="QvC-M9-y7g" id="gIp-Ho-8D9"/>
+                <outlet property="imageWell" destination="yhR-Vw-b1m" id="jJa-nz-mOw"/>
+                <outlet property="window" destination="k26-ij-FtC" id="I3d-6I-edb"/>
             </connections>
         </customObject>
         <customObject id="YLy-65-1bz" customClass="NSFontManager"/>
@@ -666,14 +667,30 @@
                 </menuItem>
             </items>
         </menu>
-        <window title="VVLUT1DFilter" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" animationBehavior="default" id="QvC-M9-y7g">
+        <window title="Core Image" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" frameAutosaveName="ci" animationBehavior="default" id="k26-ij-FtC">
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
-            <rect key="contentRect" x="335" y="390" width="480" height="360"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="1680" height="1028"/>
-            <view key="contentView" id="EiT-Mj-1SZ">
-                <rect key="frame" x="0.0" y="0.0" width="480" height="360"/>
+            <rect key="contentRect" x="335" y="390" width="480" height="509"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="1280" height="778"/>
+            <view key="contentView" wantsLayer="YES" id="PEj-yA-sEd">
+                <rect key="frame" x="0.0" y="0.0" width="480" height="509"/>
                 <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <imageView wantsLayer="YES" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="yhR-Vw-b1m">
+                        <rect key="frame" x="-3" y="-3" width="486" height="515"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" imageFrameStyle="grayBezel" id="QCk-C5-3rU"/>
+                        <connections>
+                            <binding destination="Voe-Tx-rLC" name="value" keyPath="self.inputImage" id="PhB-96-thV"/>
+                        </connections>
+                    </imageView>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="yhR-Vw-b1m" firstAttribute="top" secondItem="PEj-yA-sEd" secondAttribute="top" id="73V-Hl-X6g"/>
+                    <constraint firstItem="yhR-Vw-b1m" firstAttribute="leading" secondItem="PEj-yA-sEd" secondAttribute="leading" id="JG8-th-yFm"/>
+                    <constraint firstAttribute="bottom" secondItem="yhR-Vw-b1m" secondAttribute="bottom" id="Knv-TM-Ff4"/>
+                    <constraint firstAttribute="trailing" secondItem="yhR-Vw-b1m" secondAttribute="trailing" id="Zh1-hb-y8l"/>
+                </constraints>
             </view>
         </window>
     </objects>

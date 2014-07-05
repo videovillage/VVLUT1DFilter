@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name             = "VVLUT1DFilter"
-  s.version          = "0.1.0"
+  s.version          = begin; File.read('VERSION'); rescue; '9000.0.0'; end
   s.summary          = "A Core Image Filter for 1D Lookup Tables."
   s.homepage         = "https://github.com/videovillage/VVLUT1DFilter"
   s.license          = 'MIT'

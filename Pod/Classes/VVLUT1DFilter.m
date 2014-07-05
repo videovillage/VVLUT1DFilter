@@ -32,7 +32,13 @@ static CIKernel *lut1DKernel = nil;
 }
 
 + (NSBundle *)kernelBundle{
-    return [NSBundle bundleWithURL:[[NSBundle mainBundle] URLForResource:@"VVLUT1DFilterKernel" withExtension:@"bundle"]];
+    static NSBundle *kernelBundle = nil;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        kernelBundle = [NSBundle bundleWithURL:[[NSBundle mainBundle] URLForResource:@"VVLUT1DFilterKernel" withExtension:@"bundle"]];
+    });
+    
+    return kernelBundle;
 }
 
 - (id)init

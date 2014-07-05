@@ -7,7 +7,6 @@
 //
 
 #import "VVLUT1DFilter.h"
-#import "VVLUT1DFilterMathHelper.h"
 
 @implementation VVLUT1DFilter{
     CIImage   *inputImage;
@@ -89,15 +88,23 @@ static CIKernel *lut1DKernel = nil;
     return [self apply:lut1DKernel, inputSampler, lutSampler, kCIApplyOptionExtent, outputExtent, nil];
 }
 
++ (double)remapValue:(double)value
+            inputLow:(double)inputLow
+           inputHigh:(double)inputHigh
+           outputLow:(double)outputLow
+          outputHigh:(double)outputHigh{
+    return outputLow + ((value - inputLow)*(outputHigh - outputLow))/(inputHigh - inputLow);
+}
+
 + (NSData *)identityLUTDataOfSize:(int)size{
     size_t dataSize = sizeof(float)*4*size;
     float* lutArray = (float *)malloc(dataSize);
     for (int i = 0; i < size; i++) {
-        float identityValue = [VVLUT1DFilterMathHelper remapValue:i
-                                                         inputLow:0
-                                                         inputHigh:size-1
-                                                        outputLow:0.0
-                                                       outputHigh:1.0];
+        float identityValue = [self.class remapValue:i
+                                            inputLow:0
+                                           inputHigh:size-1
+                                           outputLow:0.0
+                                          outputHigh:1.0];
         lutArray[i*4] = identityValue;
         lutArray[i*4+1] = identityValue;
         lutArray[i*4+2] = identityValue;

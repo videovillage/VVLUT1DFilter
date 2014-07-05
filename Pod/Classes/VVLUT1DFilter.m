@@ -79,7 +79,14 @@ static CIKernel *lut1DKernel = nil;
     CISampler *lutSampler = [CISampler samplerWithImage: lutImage options:@{kCISamplerFilterMode: kCISamplerFilterLinear,
                                                                             kCISamplerWrapMode: kCISamplerWrapClamp}];
     [lut1DKernel setROISelector:@selector(regionOf:destRect:)];
-    return [self apply:lut1DKernel, inputSampler, lutSampler, nil];
+    
+    NSArray * outputExtent = [NSArray arrayWithObjects:
+                              [NSNumber numberWithInt:0],
+                              [NSNumber numberWithInt:0],
+                              [NSNumber numberWithFloat:inputImage.extent.size.width],
+                              [NSNumber numberWithFloat:inputImage.extent.size.height],nil];
+    
+    return [self apply:lut1DKernel, inputSampler, lutSampler, kCIApplyOptionExtent, outputExtent, nil];
 }
 
 + (NSData *)identityLUTDataOfSize:(int)size{

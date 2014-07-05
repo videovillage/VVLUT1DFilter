@@ -13,44 +13,15 @@ kernel vec4 lut1DKernel(sampler src, __table sampler lut)
 
     float lutSize = samplerSize(lut).x;
     
-    float redRemappedToIndex = remapFloat(inputColor.r, 0.0, 1.0, 0.0, lutSize);
-    float greenRemappedToIndex = remapFloat(inputColor.g, 0.0, 1.0, 0.0, lutSize);
-    float blueRemappedToIndex = remapFloat(inputColor.b, 0.0, 1.0, 0.0, lutSize);
-    float alphaRemappedToIndex = remapFloat(inputColor.a, 0.0, 1.0, 0.0, lutSize);
+    float redRemappedToIndex = remapFloat(inputColor.r, 0.0, 1.0, 0.0, lutSize-1.0);
+    float greenRemappedToIndex = remapFloat(inputColor.g, 0.0, 1.0, 0.0, lutSize-1.0);
+    float blueRemappedToIndex = remapFloat(inputColor.b, 0.0, 1.0, 0.0, lutSize-1.0);
+//    float alphaRemappedToIndex = remapFloat(inputColor.a, 0.0, 1.0, 0.0, lutSize-1.0);
 
     float interpRed = sample(lut, vec2(redRemappedToIndex, 0)).r;
     float interpGreen = sample(lut, vec2(greenRemappedToIndex, 0)).g;
     float interpBlue = sample(lut, vec2(blueRemappedToIndex, 0)).b;
-    float interpAlpha = sample(lut, vec2(alphaRemappedToIndex, 0)).a;
-
-//    float redBottomIndex = floor(redRemappedToIndex);
-//    float redTopIndex = ceil(redRemappedToIndex);
-//    
-//    float greenBottomIndex = floor(greenRemappedToIndex);
-//    float greenTopIndex = ceil(greenRemappedToIndex);
-//    
-//    float blueBottomIndex = floor(blueRemappedToIndex);
-//    float blueTopIndex = ceil(blueRemappedToIndex);
-//    
-//    float alphaBottomIndex = floor(alphaRemappedToIndex);
-//    float alphaTopIndex = ceil(alphaRemappedToIndex);
-//    
-//    float bottomRed = sample(lut, vec2(redBottomIndex, 0)).r;
-//    float bottomGreen = sample(lut, vec2(greenBottomIndex, 0)).g;
-//    float bottomBlue = sample(lut, vec2(blueBottomIndex, 0)).b;
-//    float bottomAlpha = sample(lut, vec2(alphaBottomIndex, 0)).a;
-//    
-//    float topRed = sample(lut, vec2(redTopIndex, 0)).r;
-//    float topGreen = sample(lut, vec2(greenTopIndex, 0)).g;
-//    float topBlue = sample(lut, vec2(blueTopIndex, 0)).b;
-//    float topAlpha = sample(lut, vec2(alphaTopIndex, 0)).a;
-//    
-//    float interpRed = lerp1d(bottomRed, topRed, (redTopIndex-redRemappedToIndex)/(redTopIndex-redBottomIndex));
-//    float interpGreen = lerp1d(bottomGreen, topGreen, (greenTopIndex-greenRemappedToIndex)/(greenTopIndex-greenBottomIndex));
-//    float interpBlue = lerp1d(bottomBlue, topBlue, (blueTopIndex-blueRemappedToIndex)/(blueTopIndex-blueBottomIndex));
-//    float interpAlpha = lerp1d(bottomAlpha, topAlpha, (alphaTopIndex-alphaRemappedToIndex)/(alphaTopIndex-alphaBottomIndex));
-
-
+ //   float interpAlpha = sample(lut, vec2(alphaRemappedToIndex, 0)).a;
 
     return vec4(interpRed, interpGreen, interpBlue, 1.0);
 }

@@ -38,8 +38,8 @@
     [VVLUT1DFilter registerFilter];
     self.lut1DFilter = [CIFilter filterWithName:@"VVLUT1DFilter"];
     
-    [self.lut1DFilter setValue:[VVLUT1DFilter identityLUTDataOfSize:100] forKey:@"lutData"];
-    [self.lut1DFilter setValue:@100 forKey:@"lutSize"];
+    [self.lut1DFilter setValue:[VVLUT1DFilter identityLUTDataOfSize:100] forKey:@"inputData"];
+    [self.lut1DFilter setValue:@100 forKey:@"inputSize"];
     
     self.imageWell.contentFilters = @[self.lut1DFilter];
 }

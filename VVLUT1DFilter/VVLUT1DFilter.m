@@ -15,8 +15,8 @@
 
 @implementation VVLUT1DFilter{
     CIImage   *inputImage;
-    NSData *lutData;
-    NSNumber *lutSize;
+    NSData *inputData;
+    NSNumber *inputSize;
 }
 
 static CIKernel *lut1DKernel = nil;
@@ -52,7 +52,6 @@ static CIKernel *lut1DKernel = nil;
             
             NSArray *kernels = [CIKernel kernelsWithString:kernelCode];
             lut1DKernel = [kernels objectAtIndex:0];
-            
         }
     }
     
@@ -61,15 +60,15 @@ static CIKernel *lut1DKernel = nil;
 
 
 - (CIImage *)outputImage {
-    [self setDefaults];
-    CIImage *lutImage = [CIImage imageWithBitmapData:lutData
-                                         bytesPerRow:sizeof(float)*4*lutSize.integerValue
-                                                size:CGSizeMake(lutSize.integerValue, 1)
+    CIImage *lutImage = [CIImage imageWithBitmapData:inputData
+                                         bytesPerRow:sizeof(float)*4*inputSize.integerValue
+                                                size:CGSizeMake(inputSize.integerValue, 1)
                                               format:kCIFormatRGBAf
                                           colorSpace:nil];
     
     CISampler *inputSampler = [CISampler samplerWithImage: inputImage];
-    CISampler *lutSampler = [CISampler samplerWithImage: lutImage options:@{kCISamplerFilterMode: kCISamplerFilterLinear}];
+    CISampler *lutSampler = [CISampler samplerWithImage: lutImage options:@{kCISamplerFilterMode: kCISamplerFilterLinear,
+                                                                            kCISamplerWrapMode: kCISamplerWrapClamp}];
     [lut1DKernel setROISelector:@selector(regionOf:destRect:)];
     return [self apply:lut1DKernel, inputSampler, lutSampler, nil];
 }
@@ -78,7 +77,7 @@ static CIKernel *lut1DKernel = nil;
     size_t dataSize = sizeof(float)*4*size;
     float* lutArray = (float *)malloc(dataSize);
     for (int i = 0; i < size; i++) {
-        float identityValue = remap(i, 0, size, 0, 1);
+        float identityValue = remap(i, 0, size-1, 0, 1);
         lutArray[i*4] = identityValue;
         lutArray[i*4+1] = identityValue;
         lutArray[i*4+2] = identityValue;
@@ -89,40 +88,35 @@ static CIKernel *lut1DKernel = nil;
 }
 
 - (void)setDefaults{
-    [super setDefaults];
-    lutData = [self.class identityLUTDataOfSize:100];
-    lutSize = @100;
+    inputData = [self.class identityLUTDataOfSize:100];
+    inputSize = @100;
 }
 
 
 - (CGRect)regionOf:(int)samplerIndex destRect:(CGRect)r
 {
-    //NSLog(@"%i:  %f %f %f %f",samplerIndex, r.origin.x, r.origin.y, r.size.width, r.size.height);
     if (samplerIndex == 0) {
         return r;
     }
-    return NSMakeRect(0, 0, lutSize.integerValue, 1);
+    return NSMakeRect(0, 0, inputSize.integerValue, 1);
 }
 
 - (NSDictionary *)customAttributes
 {
-
-    
-    
     NSDictionary *sizeDictionary = @{
-                                      kCIAttributeMin : @2,
-                                      kCIAttributeMax : @65536,
-                                      kCIAttributeDefault : @10,
+                                      kCIAttributeMin : @100,
+                                      kCIAttributeMax : @1024,
+                                      kCIAttributeDefault : @100,
                                       kCIAttributeType : kCIAttributeTypeInteger
                                       };
     
     NSDictionary *lutDataDictionary = @{
-                                      kCIAttributeDefault : [self.class identityLUTDataOfSize:10]
+                                      kCIAttributeDefault : [self.class identityLUTDataOfSize:100]
                                       };
     
     return @{
-             @"lutSize" : sizeDictionary,
-             @"lutData": lutDataDictionary,
+             @"inputSize" : sizeDictionary,
+             @"inputData": lutDataDictionary,
              // This is needed because the filter is registered under a different name than the class.
              kCIAttributeFilterName : @"VVLUT1DFilter"
              };

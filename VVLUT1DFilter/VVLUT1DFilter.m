@@ -52,6 +52,7 @@ static CIKernel *lut1DKernel = nil;
             
             NSArray *kernels = [CIKernel kernelsWithString:kernelCode];
             lut1DKernel = [kernels objectAtIndex:0];
+            
         }
     }
     
@@ -65,32 +66,42 @@ static CIKernel *lut1DKernel = nil;
                                          bytesPerRow:sizeof(float)*4*lutSize.integerValue
                                                 size:CGSizeMake(lutSize.integerValue, 1)
                                               format:kCIFormatRGBAf
-                                          colorSpace:CGColorSpaceCreateDeviceRGB()];
+                                          colorSpace:nil];
     
     CISampler *inputSampler = [CISampler samplerWithImage: inputImage];
-    CISampler *lutSampler = [CISampler samplerWithImage: lutImage];
-
+    CISampler *lutSampler = [CISampler samplerWithImage: lutImage options:@{kCISamplerFilterMode: kCISamplerFilterLinear}];
+    [lut1DKernel setROISelector:@selector(regionOf:destRect:)];
     return [self apply:lut1DKernel, inputSampler, lutSampler, nil];
 }
 
 + (NSData *)identityLUTDataOfSize:(int)size{
     size_t dataSize = sizeof(float)*4*size;
     float* lutArray = (float *)malloc(dataSize);
-    for (int i = 0; i < size/4; i++) {
-        float identityValue = remap(i, 0, (double)size/4.0, 0, 1);
+    for (int i = 0; i < size; i++) {
+        float identityValue = remap(i, 0, size, 0, 1);
         lutArray[i*4] = identityValue;
         lutArray[i*4+1] = identityValue;
         lutArray[i*4+2] = identityValue;
         lutArray[i*4+3] = 1.0;
     }
     
-    return [NSData dataWithBytesNoCopy:lutArray length:dataSize freeWhenDone:YES];
+    return [NSData dataWithBytes:lutArray length:dataSize];
 }
 
 - (void)setDefaults{
     [super setDefaults];
-    lutData = [self.class identityLUTDataOfSize:10];
-    lutSize = @10;
+    lutData = [self.class identityLUTDataOfSize:100];
+    lutSize = @100;
+}
+
+
+- (CGRect)regionOf:(int)samplerIndex destRect:(CGRect)r
+{
+    //NSLog(@"%i:  %f %f %f %f",samplerIndex, r.origin.x, r.origin.y, r.size.width, r.size.height);
+    if (samplerIndex == 0) {
+        return r;
+    }
+    return NSMakeRect(0, 0, lutSize.integerValue, 1);
 }
 
 - (NSDictionary *)customAttributes

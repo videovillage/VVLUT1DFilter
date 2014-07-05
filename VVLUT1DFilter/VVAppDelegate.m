@@ -19,11 +19,11 @@
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
-    self.inputImage = [NSImage imageNamed:@"test"];
+    self.inputImage = [NSImage imageNamed:@"test.jpg"];
     
-//    CIImage *lutImage = [CIImage imageWithBitmapData:[VVLUT1DFilter identityLUTDataOfSize:10000]
-//                                         bytesPerRow:sizeof(float)*4*10
-//                                                size:CGSizeMake(10, 1000)
+//    CIImage *lutImage = [CIImage imageWithBitmapData:[VVLUT1DFilter identityLUTDataOfSize:100]
+//                                         bytesPerRow:sizeof(float)*4*100
+//                                                size:CGSizeMake(100, 1)
 //                                              format:kCIFormatRGBAf
 //                                          colorSpace:CGColorSpaceCreateDeviceRGB()];
 //    
@@ -32,7 +32,7 @@
 //    NSImage *output = [[NSImage alloc] init];
 //    
 //    [output addRepresentation:ciiRep];
-    
+//    
 //    self.inputImage = output;
     
     [VVLUT1DFilter registerFilter];

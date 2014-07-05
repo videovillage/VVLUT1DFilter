@@ -9,10 +9,6 @@
 #import "VVLUT1DFilter.h"
 #import "VVLUT1DFilterMathHelper.h"
 
-@interface VVLUT1DFilter ()
-
-@end
-
 @implementation VVLUT1DFilter{
     CIImage   *inputImage;
     NSData *inputData;
@@ -20,6 +16,10 @@
 }
 
 static CIKernel *lut1DKernel = nil;
+
++ (void)load{
+    [self registerFilter];
+}
 
 + (void)registerFilter {
     NSDictionary *attributes = @{ kCIAttributeFilterDisplayName : @"LUT1D",

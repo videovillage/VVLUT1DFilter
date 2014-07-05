@@ -35,7 +35,6 @@
 //    
 //    self.inputImage = output;
     
-    [VVLUT1DFilter registerFilter];
     self.lut1DFilter = [CIFilter filterWithName:@"VVLUT1DFilter"];
     
     [self.lut1DFilter setValue:[VVLUT1DFilter identityLUTDataOfSize:100] forKey:@"inputData"];

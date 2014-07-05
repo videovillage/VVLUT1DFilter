@@ -31,6 +31,10 @@ static CIKernel *lut1DKernel = nil;
     return [[self alloc] init];
 }
 
++ (NSBundle *)kernelBundle{
+    return [NSBundle bundleWithURL:[[NSBundle mainBundle] URLForResource:@"VVLUT1DFilterKernel" withExtension:@"bundle"]];
+}
+
 - (id)init
 {
     self = [super init];
@@ -40,8 +44,7 @@ static CIKernel *lut1DKernel = nil;
         if (lut1DKernel == nil)
         {
             // Load the haze removal kernel.
-            NSBundle *bundle = [NSBundle bundleForClass: [self class]];
-            NSURL *kernelURL = [bundle URLForResource:@"VVLUT1DKernel" withExtension:@"cikernel"];
+            NSURL *kernelURL = [[self.class kernelBundle] URLForResource:@"VVLUT1DKernel" withExtension:@"cikernel"];
             
             NSError *error;
             NSString *kernelCode = [NSString stringWithContentsOfURL:kernelURL encoding:NSUTF8StringEncoding error:&error];

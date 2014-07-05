@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		32525EC552624445B533BD06 /* libPods-VVLUT1DFilter.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AE554AB496B244D69C5FFCD6 /* libPods-VVLUT1DFilter.a */; };
 		F2F6EE7A19673485001225D1 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F2F6EE7919673485001225D1 /* Cocoa.framework */; };
 		F2F6EE8419673485001225D1 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = F2F6EE8219673485001225D1 /* InfoPlist.strings */; };
 		F2F6EE8619673485001225D1 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = F2F6EE8519673485001225D1 /* main.m */; };
@@ -18,9 +19,6 @@
 		F2F6EE9A19673485001225D1 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F2F6EE7919673485001225D1 /* Cocoa.framework */; };
 		F2F6EEA219673485001225D1 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = F2F6EEA019673485001225D1 /* InfoPlist.strings */; };
 		F2F6EEA419673485001225D1 /* VVLUT1DFilterTests.m in Sources */ = {isa = PBXBuildFile; fileRef = F2F6EEA319673485001225D1 /* VVLUT1DFilterTests.m */; };
-		F2F6EEB3196735CB001225D1 /* VVLUT1DFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = F2F6EEB2196735CB001225D1 /* VVLUT1DFilter.m */; };
-		F2F6EEB719673A74001225D1 /* VVLUT1DFilterMathHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = F2F6EEB619673A74001225D1 /* VVLUT1DFilterMathHelper.m */; };
-		F2F6EEBA1967413A001225D1 /* VVLUT1DKernel.cikernel in Resources */ = {isa = PBXBuildFile; fileRef = F2F6EEB91967413A001225D1 /* VVLUT1DKernel.cikernel */; };
 		F2F6EEBC196741F9001225D1 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F2F6EEBB196741F9001225D1 /* QuartzCore.framework */; };
 		F2F6EEBE196743E5001225D1 /* test.jpg in Resources */ = {isa = PBXBuildFile; fileRef = F2F6EEBD196743E5001225D1 /* test.jpg */; };
 /* End PBXBuildFile section */
@@ -36,6 +34,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		5EAF9856DFAD4DE0BD1CD472 /* Pods-VVLUT1DFilter.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VVLUT1DFilter.xcconfig"; path = "Pods/Pods-VVLUT1DFilter.xcconfig"; sourceTree = "<group>"; };
+		AE554AB496B244D69C5FFCD6 /* libPods-VVLUT1DFilter.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-VVLUT1DFilter.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		F2F6EE7619673485001225D1 /* VVLUT1DFilter.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = VVLUT1DFilter.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F2F6EE7919673485001225D1 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		F2F6EE7C19673485001225D1 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
@@ -55,11 +55,6 @@
 		F2F6EE9F19673485001225D1 /* VVLUT1DFilterTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "VVLUT1DFilterTests-Info.plist"; sourceTree = "<group>"; };
 		F2F6EEA119673485001225D1 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		F2F6EEA319673485001225D1 /* VVLUT1DFilterTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VVLUT1DFilterTests.m; sourceTree = "<group>"; };
-		F2F6EEB1196735CB001225D1 /* VVLUT1DFilter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VVLUT1DFilter.h; path = VVLUT1DFilter/VVLUT1DFilter.h; sourceTree = "<group>"; };
-		F2F6EEB2196735CB001225D1 /* VVLUT1DFilter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = VVLUT1DFilter.m; path = VVLUT1DFilter/VVLUT1DFilter.m; sourceTree = "<group>"; };
-		F2F6EEB519673A74001225D1 /* VVLUT1DFilterMathHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VVLUT1DFilterMathHelper.h; path = VVLUT1DFilter/VVLUT1DFilterMathHelper.h; sourceTree = "<group>"; };
-		F2F6EEB619673A74001225D1 /* VVLUT1DFilterMathHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = VVLUT1DFilterMathHelper.m; path = VVLUT1DFilter/VVLUT1DFilterMathHelper.m; sourceTree = "<group>"; };
-		F2F6EEB91967413A001225D1 /* VVLUT1DKernel.cikernel */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = VVLUT1DKernel.cikernel; path = VVLUT1DFilter/VVLUT1DKernel.cikernel; sourceTree = "<group>"; };
 		F2F6EEBB196741F9001225D1 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		F2F6EEBD196743E5001225D1 /* test.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = test.jpg; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -71,6 +66,7 @@
 			files = (
 				F2F6EEBC196741F9001225D1 /* QuartzCore.framework in Frameworks */,
 				F2F6EE7A19673485001225D1 /* Cocoa.framework in Frameworks */,
+				32525EC552624445B533BD06 /* libPods-VVLUT1DFilter.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -89,11 +85,11 @@
 		F2F6EE6D19673485001225D1 = {
 			isa = PBXGroup;
 			children = (
-				F2F6EEAD1967352D001225D1 /* VVLUT1DFilter */,
 				F2F6EE7F19673485001225D1 /* VVLUT1DFilterExample */,
 				F2F6EE9D19673485001225D1 /* VVLUT1DFilterTests */,
 				F2F6EE7819673485001225D1 /* Frameworks */,
 				F2F6EE7719673485001225D1 /* Products */,
+				5EAF9856DFAD4DE0BD1CD472 /* Pods-VVLUT1DFilter.xcconfig */,
 			);
 			sourceTree = "<group>";
 		};
@@ -113,6 +109,7 @@
 				F2F6EE7919673485001225D1 /* Cocoa.framework */,
 				F2F6EE9819673485001225D1 /* XCTest.framework */,
 				F2F6EE7B19673485001225D1 /* Other Frameworks */,
+				AE554AB496B244D69C5FFCD6 /* libPods-VVLUT1DFilter.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -171,18 +168,6 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		F2F6EEAD1967352D001225D1 /* VVLUT1DFilter */ = {
-			isa = PBXGroup;
-			children = (
-				F2F6EEB1196735CB001225D1 /* VVLUT1DFilter.h */,
-				F2F6EEB2196735CB001225D1 /* VVLUT1DFilter.m */,
-				F2F6EEB519673A74001225D1 /* VVLUT1DFilterMathHelper.h */,
-				F2F6EEB619673A74001225D1 /* VVLUT1DFilterMathHelper.m */,
-				F2F6EEB91967413A001225D1 /* VVLUT1DKernel.cikernel */,
-			);
-			name = VVLUT1DFilter;
-			sourceTree = "<group>";
-		};
 		F2F6EEBF196743EC001225D1 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
@@ -198,9 +183,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = F2F6EEA719673485001225D1 /* Build configuration list for PBXNativeTarget "VVLUT1DFilter" */;
 			buildPhases = (
+				08C327D67AD54AEC850E609C /* Check Pods Manifest.lock */,
 				F2F6EE7219673485001225D1 /* Sources */,
 				F2F6EE7319673485001225D1 /* Frameworks */,
 				F2F6EE7419673485001225D1 /* Resources */,
+				AE89292B66FC47F28A52652D /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -271,7 +258,6 @@
 				F2F6EE8419673485001225D1 /* InfoPlist.strings in Resources */,
 				F2F6EE9219673485001225D1 /* Images.xcassets in Resources */,
 				F2F6EEBE196743E5001225D1 /* test.jpg in Resources */,
-				F2F6EEBA1967413A001225D1 /* VVLUT1DKernel.cikernel in Resources */,
 				F2F6EE8A19673485001225D1 /* Credits.rtf in Resources */,
 				F2F6EE9019673485001225D1 /* MainMenu.xib in Resources */,
 			);
@@ -287,6 +273,39 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		08C327D67AD54AEC850E609C /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		AE89292B66FC47F28A52652D /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Pods-VVLUT1DFilter-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		F2F6EE7219673485001225D1 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -294,8 +313,6 @@
 			files = (
 				F2F6EE8D19673485001225D1 /* VVAppDelegate.m in Sources */,
 				F2F6EE8619673485001225D1 /* main.m in Sources */,
-				F2F6EEB719673A74001225D1 /* VVLUT1DFilterMathHelper.m in Sources */,
-				F2F6EEB3196735CB001225D1 /* VVLUT1DFilter.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -425,6 +442,7 @@
 		};
 		F2F6EEA819673485001225D1 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 5EAF9856DFAD4DE0BD1CD472 /* Pods-VVLUT1DFilter.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				COMBINE_HIDPI_IMAGES = YES;
@@ -438,6 +456,7 @@
 		};
 		F2F6EEA919673485001225D1 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 5EAF9856DFAD4DE0BD1CD472 /* Pods-VVLUT1DFilter.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				COMBINE_HIDPI_IMAGES = YES;

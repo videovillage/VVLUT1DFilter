@@ -8,10 +8,12 @@
 
 #import <Foundation/Foundation.h>
 
-
-double remap(double value, double inputLow, double inputHigh, double outputLow, double outputHigh);
-double remapNoError(double value, double inputLow, double inputHigh, double outputLow, double outputHigh);
-
 @interface VVLUT1DFilterMathHelper : NSObject
+
++ (double)remapValue:(double)value
+            inputLow:(double)inputLow
+           inputHigh:(double)inputHigh
+           outputLow:(double)outputLow
+          outputHigh:(double)outputHigh;
 
 @end

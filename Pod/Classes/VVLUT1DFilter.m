@@ -80,7 +80,11 @@ static CIKernel *lut1DKernel = nil;
     size_t dataSize = sizeof(float)*4*size;
     float* lutArray = (float *)malloc(dataSize);
     for (int i = 0; i < size; i++) {
-        float identityValue = remap(i, 0, size-1, 0, 1);
+        float identityValue = [VVLUT1DFilterMathHelper remapValue:i
+                                                         inputLow:0
+                                                         inputHigh:size-1
+                                                        outputLow:0.0
+                                                       outputHigh:1.0];
         lutArray[i*4] = identityValue;
         lutArray[i*4+1] = identityValue;
         lutArray[i*4+2] = identityValue;

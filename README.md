@@ -5,7 +5,7 @@
 [![License](https://img.shields.io/cocoapods/l/VVLUT1DFilter.svg?style=flat)](http://cocoadocs.org/docsets/VVLUT1DFilter)
 [![Platform](https://img.shields.io/cocoapods/p/VVLUT1DFilter.svg?style=flat)](http://cocoadocs.org/docsets/VVLUT1DFilter)
 
-VVLUT1DFilter is a custom Core Image Filter that applies a 1D look up tables (1D LUT) to an input image. LUTs are often used in film and video finishing, graphics, video games, and rendering.
+VVLUT1DFilter is a custom Core Image Filter that applies a 1D look up table (1D LUT) to an input image. LUTs are often used in film and video finishing, graphics, video games, and rendering.
 
 ## Usage
 

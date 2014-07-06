@@ -79,11 +79,10 @@ static CIKernel *lut1DKernel = nil;
                                                                             kCISamplerWrapMode: kCISamplerWrapClamp}];
     [lut1DKernel setROISelector:@selector(regionOf:destRect:)];
     
-    NSArray * outputExtent = [NSArray arrayWithObjects:
-                              [NSNumber numberWithInt:0],
-                              [NSNumber numberWithInt:0],
-                              [NSNumber numberWithFloat:inputImage.extent.size.width],
-                              [NSNumber numberWithFloat:inputImage.extent.size.height],nil];
+    NSArray * outputExtent = @[@(inputImage.extent.origin.x),
+                               @(inputImage.extent.origin.y),
+                               @(inputImage.extent.size.width),
+                               @(inputImage.extent.size.height)];
     
     return [self apply:lut1DKernel, inputSampler, lutSampler, kCIApplyOptionExtent, outputExtent, nil];
 }

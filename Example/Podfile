@@ -3,7 +3,7 @@ platform :osx, '10.8'
 workspace 'VVLUT1DFilter'
 
 target :VVLUT1DFilter, :exclusive => true do
-  pod 'VVLUT1DFilter', path: '..'
+  pod 'VVLUT1DFilter', path: '../'
   xcodeproj 'VVLUT1DFilter.xcodeproj'
 end
 

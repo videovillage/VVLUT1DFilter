@@ -8,6 +8,7 @@
 
 #import "VVAppDelegate.h"
 #import "VVLUT1DFilter.h"
+#import "VVLUT1DFilterWithColorSpace.h"
 
 @interface VVAppDelegate ()
 
@@ -35,10 +36,11 @@
 //    
 //    self.inputImage = output;
     
-    self.lut1DFilter = [CIFilter filterWithName:@"VVLUT1DFilter"];
+    self.lut1DFilter = [CIFilter filterWithName:@"VVLUT1DFilterWithColorSpace"];
     
     [self.lut1DFilter setValue:[VVLUT1DFilter identityLUTDataOfSize:100] forKey:@"inputData"];
     [self.lut1DFilter setValue:@100 forKey:@"inputSize"];
+    [self.lut1DFilter setValue:(__bridge id)CGColorSpaceCreateDeviceRGB() forKey:@"inputColorSpace"];
     
     self.imageWell.contentFilters = @[self.lut1DFilter];
 }

@@ -110,7 +110,7 @@ static CIKernel *lut1DKernel = nil;
         lutArray[i*4+3] = 1.0;
     }
     
-    return [NSData dataWithBytes:lutArray length:dataSize];
+    return [NSData dataWithBytesNoCopy:lutArray length:dataSize];
 }
 
 - (void)setDefaults{

@@ -12,7 +12,5 @@ Pod::Spec.new do |s|
 
   s.source_files = 'Pod/Classes/**'
 
-  s.resource_bundle = {'VVLUT1DFilterKernel' => 'Pod/Kernels/*.cikernel'}
-
   s.frameworks = 'QuartzCore'
 end

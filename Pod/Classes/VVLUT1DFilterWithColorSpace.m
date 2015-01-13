@@ -7,6 +7,7 @@
 //
 
 #import "VVLUT1DFilterWithColorSpace.h"
+#import "VVLUT1DFilterKernel.h"
 
 @implementation VVLUT1DFilterWithColorSpace{
     CIImage   *inputImage;
@@ -74,17 +75,16 @@ static CIKernel *lut1DKernel = nil;
     if (self) {
         if (lut1DKernel == nil)
         {
-            // Load the haze removal kernel.
-            NSURL *kernelURL = [[self.class kernelBundle] URLForResource:@"VVLUT1DKernel" withExtension:@"cikernel"];
+//            NSURL *kernelURL = [[self.class kernelBundle] URLForResource:@"VVLUT1DKernel" withExtension:@"cikernel"];
+//
+//            NSError *error;
+//            NSString *kernelCode = [NSString stringWithContentsOfURL:kernelURL encoding:NSUTF8StringEncoding error:&error];
+//            if (kernelCode == nil) {
+//                NSLog(@"Error loading kernel code string in %@\n%@", NSStringFromSelector(_cmd), [error localizedDescription]);
+//                abort();
+//            }
 
-            NSError *error;
-            NSString *kernelCode = [NSString stringWithContentsOfURL:kernelURL encoding:NSUTF8StringEncoding error:&error];
-            if (kernelCode == nil) {
-                NSLog(@"Error loading kernel code string in %@\n%@", NSStringFromSelector(_cmd), [error localizedDescription]);
-                abort();
-            }
-
-            NSArray *kernels = [CIKernel kernelsWithString:kernelCode];
+            NSArray *kernels = [CIKernel kernelsWithString:[VVLUT1DFilterKernel kernelString]];
             lut1DKernel = [kernels objectAtIndex:0];
         }
     }

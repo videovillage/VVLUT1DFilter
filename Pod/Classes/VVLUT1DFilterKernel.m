@@ -47,13 +47,13 @@ kernel vec4 lut1DKernel(sampler src, __table sampler lut, float lutSize){
     float bluePoint = inputColor.b*(lutSize-1.0);
     
     int redBottomIndex = int(redPoint);
-    int redTopIndex = int(redPoint) + 1;
+    int redTopIndex = int(ceil(redPoint));
 
     int greenBottomIndex = int(greenPoint);
-    int greenTopIndex = int(greenPoint) + 1;
+    int greenTopIndex = int(ceil(greenPoint));
 
     int blueBottomIndex = int(bluePoint);
-    int blueTopIndex = int(bluePoint) + 1;
+    int blueTopIndex = int(ceil(bluePoint));
     
     float interpolatedRedValue = lerp1d(redValueAtLUTIndex(redBottomIndex, lut), redValueAtLUTIndex(redTopIndex, lut), redPoint - float(redBottomIndex));
     float interpolatedGreenValue = lerp1d(greenValueAtLUTIndex(greenBottomIndex, lut), greenValueAtLUTIndex(greenTopIndex, lut), greenPoint - float(greenBottomIndex));

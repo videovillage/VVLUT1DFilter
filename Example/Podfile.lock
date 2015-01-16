@@ -1,14 +1,14 @@
 PODS:
-  - VVLUT1DFilter (0.1.0)
+  - VVLUT1DFilter (1.0.3)
 
 DEPENDENCIES:
-  - VVLUT1DFilter (from `..`)
+  - VVLUT1DFilter (from `../`)
 
 EXTERNAL SOURCES:
   VVLUT1DFilter:
-    :path: ..
+    :path: ../
 
 SPEC CHECKSUMS:
-  VVLUT1DFilter: ee0e42c93e30bc3675dee0a5d0df671d3f52d954
+  VVLUT1DFilter: 2d50e5cca5f05d40db02f6de847340a9e07d6352
 
-COCOAPODS: 0.33.1
+COCOAPODS: 0.35.0

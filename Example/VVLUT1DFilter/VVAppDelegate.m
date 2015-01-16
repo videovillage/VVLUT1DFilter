@@ -20,7 +20,7 @@
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
-    self.inputImage = [NSImage imageNamed:@"test.jpg"];
+    self.inputImage = [NSImage imageNamed:@"FakeMarcie.jpg"];
     
 //    CIImage *lutImage = [CIImage imageWithBitmapData:[VVLUT1DFilter identityLUTDataOfSize:100]
 //                                         bytesPerRow:sizeof(float)*4*100

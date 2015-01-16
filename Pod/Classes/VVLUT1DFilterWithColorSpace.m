@@ -75,9 +75,6 @@ static CIKernel *lut1DKernel = nil;
 - (NSDictionary *)customAttributes
 {
     NSDictionary *sizeDictionary = @{
-                                     kCIAttributeMin : @100,
-                                     kCIAttributeMax : @1024,
-                                     kCIAttributeDefault : @100,
                                      kCIAttributeType : kCIAttributeTypeInteger
                                      };
 

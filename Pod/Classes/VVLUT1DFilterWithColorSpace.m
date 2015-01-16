@@ -32,16 +32,6 @@ static CIKernel *lut1DKernel = nil;
     return [[self alloc] init];
 }
 
-+ (NSBundle *)kernelBundle{
-    static NSBundle *kernelBundle = nil;
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        kernelBundle = [NSBundle bundleWithURL:[[NSBundle mainBundle] URLForResource:@"VVLUT1DFilterKernel" withExtension:@"bundle"]];
-    });
-
-    return kernelBundle;
-}
-
 + (double)remapValue:(double)value
             inputLow:(double)inputLow
            inputHigh:(double)inputHigh
@@ -75,17 +65,7 @@ static CIKernel *lut1DKernel = nil;
     if (self) {
         if (lut1DKernel == nil)
         {
-//            NSURL *kernelURL = [[self.class kernelBundle] URLForResource:@"VVLUT1DKernel" withExtension:@"cikernel"];
-//
-//            NSError *error;
-//            NSString *kernelCode = [NSString stringWithContentsOfURL:kernelURL encoding:NSUTF8StringEncoding error:&error];
-//            if (kernelCode == nil) {
-//                NSLog(@"Error loading kernel code string in %@\n%@", NSStringFromSelector(_cmd), [error localizedDescription]);
-//                abort();
-//            }
-
-            NSArray *kernels = [CIKernel kernelsWithString:[VVLUT1DFilterKernel kernelString]];
-            lut1DKernel = [kernels objectAtIndex:0];
+            lut1DKernel = [VVLUT1DFilterKernel kernel];
         }
     }
 
@@ -129,19 +109,19 @@ static CIKernel *lut1DKernel = nil;
     if (samplerIndex == 0) {
         return r;
     }
-    return NSMakeRect(0, 0, inputSize.integerValue, 1);
+    return NSMakeRect(0, 0, VVLUT1DFILTER_TEX_MAX_WIDTH, (int)ceil(inputSize.doubleValue/(double)VVLUT1DFILTER_TEX_MAX_WIDTH));
 }
 
 - (CIImage *)outputImage {
     CIImage *lutImage = [CIImage imageWithBitmapData:inputData
-                                         bytesPerRow:sizeof(float)*4*inputSize.integerValue
-                                                size:CGSizeMake(inputSize.integerValue, 1)
+                                         bytesPerRow:sizeof(float)*4*VVLUT1DFILTER_TEX_MAX_WIDTH
+                                                size:CGSizeMake(VVLUT1DFILTER_TEX_MAX_WIDTH, (int)ceil(inputSize.doubleValue/(double)VVLUT1DFILTER_TEX_MAX_WIDTH))
                                               format:kCIFormatRGBAf
                                           colorSpace:nil];
 
     CISampler *inputSampler = [CISampler samplerWithImage: inputImage options:@{kCISamplerColorSpace: inputColorSpace}];
-    CISampler *lutSampler = [CISampler samplerWithImage: lutImage options:@{kCISamplerFilterMode: kCISamplerFilterLinear,
-                                                                            kCISamplerWrapMode: kCISamplerWrapClamp}];
+    CISampler *lutSampler = [CISampler samplerWithImage: lutImage options:@{kCISamplerFilterMode: kCISamplerFilterNearest,
+                                                                            kCISamplerWrapMode: kCISamplerWrapClamp, kCISamplerColorSpace: inputColorSpace}];
     [lut1DKernel setROISelector:@selector(regionOf:destRect:)];
 
     NSArray * outputExtent = @[@(inputImage.extent.origin.x),
@@ -149,7 +129,7 @@ static CIKernel *lut1DKernel = nil;
                                @(inputImage.extent.size.width),
                                @(inputImage.extent.size.height)];
 
-    return [self apply:lut1DKernel, inputSampler, lutSampler, kCIApplyOptionExtent, outputExtent, kCIApplyOptionColorSpace, inputColorSpace, nil];
+    return [self apply:lut1DKernel, inputSampler, lutSampler, inputSize, kCIApplyOptionExtent, outputExtent, kCIApplyOptionColorSpace, inputColorSpace, nil];
 }
 
 @end

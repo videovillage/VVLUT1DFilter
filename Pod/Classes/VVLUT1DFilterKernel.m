@@ -14,26 +14,53 @@ float remapFloat(float value, float inputLow, float inputHigh, float outputLow, 
 }
 
 float lerp1d(float beginning, float end, float value01) {
-    float range = end - beginning;
-    return beginning + range * value01;
+    return beginning + (value01 * (end - beginning));
+}
+                                                           
+//vec3 lerp1d(vec3 beginning, vec3 end, float value01){
+//    return vec3(lerp1d(beginning.r, end.r, value01), lerp1d(beginning.g, end.g, value01), lerp1d(beginning.b, end.b, value01));
+//}
+                                                           
+vec2 indexToLUTCoordinate(int index){
+    int x = int(mod(float(index),float(VVLUT1DFILTER_TEX_MAX_WIDTH)));
+    int y = index/VVLUT1DFILTER_TEX_MAX_WIDTH;
+    return vec2(x, y);
+}
+                                                           
+float redValueAtLUTIndex(int index, __table sampler lut){
+    return sample(lut, indexToLUTCoordinate(index)).r;
+}
+                                                           
+float greenValueAtLUTIndex(int index, __table sampler lut){
+   return sample(lut, indexToLUTCoordinate(index)).g;
 }
 
-kernel vec4 lut1DKernel(sampler src, __table sampler lut){
+float blueValueAtLUTIndex(int index, __table sampler lut){
+    return sample(lut, indexToLUTCoordinate(index)).b;
+}
+
+kernel vec4 lut1DKernel(sampler src, __table sampler lut, float lutSize){
     vec4 inputColor = sample(src, samplerCoord(src));
+    
+    float redPoint = inputColor.r*(lutSize-1.0);
+    float greenPoint = inputColor.g*(lutSize-1.0);
+    float bluePoint = inputColor.b*(lutSize-1.0);
+    
+    int redBottomIndex = int(redPoint);
+    int redTopIndex = int(redPoint) + 1;
 
-    float lutSize = samplerSize(lut).x;
+    int greenBottomIndex = int(greenPoint);
+    int greenTopIndex = int(greenPoint) + 1;
 
-    float redRemappedToIndex = remapFloat(inputColor.r, 0.0, 1.0, 0.0, lutSize-1.0);
-    float greenRemappedToIndex = remapFloat(inputColor.g, 0.0, 1.0, 0.0, lutSize-1.0);
-    float blueRemappedToIndex = remapFloat(inputColor.b, 0.0, 1.0, 0.0, lutSize-1.0);
-    //    float alphaRemappedToIndex = remapFloat(inputColor.a, 0.0, 1.0, 0.0, lutSize-1.0);
+    int blueBottomIndex = int(bluePoint);
+    int blueTopIndex = int(bluePoint) + 1;
+    
+    float interpolatedRedValue = lerp1d(redValueAtLUTIndex(redBottomIndex, lut), redValueAtLUTIndex(redTopIndex, lut), redPoint - float(redBottomIndex));
+    float interpolatedGreenValue = lerp1d(greenValueAtLUTIndex(greenBottomIndex, lut), greenValueAtLUTIndex(greenTopIndex, lut), greenPoint - float(greenBottomIndex));
+    float interpolatedBlueValue = lerp1d(blueValueAtLUTIndex(blueBottomIndex, lut), blueValueAtLUTIndex(blueTopIndex, lut), bluePoint - float(blueBottomIndex));
+    
 
-    float interpRed = sample(lut, vec2(redRemappedToIndex, 0)).r;
-    float interpGreen = sample(lut, vec2(greenRemappedToIndex, 0)).g;
-    float interpBlue = sample(lut, vec2(blueRemappedToIndex, 0)).b;
-    //   float interpAlpha = sample(lut, vec2(alphaRemappedToIndex, 0)).a;
-
-    return vec4(interpRed, interpGreen, interpBlue, 1.0);
+    return vec4(interpolatedRedValue, interpolatedGreenValue, interpolatedBlueValue, inputColor.a);
 }
 
 
@@ -41,8 +68,9 @@ kernel vec4 lut1DKernel(sampler src, __table sampler lut){
 
 @implementation VVLUT1DFilterKernel
 
-+ (NSString *)kernelString{
-    return kVVLUT1DFilterKernelString;
++ (CIKernel *)kernel{
+    
+    return [CIKernel kernelWithString:kVVLUT1DFilterKernelString];
 }
 
 @end

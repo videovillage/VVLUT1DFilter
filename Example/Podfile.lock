@@ -1,5 +1,5 @@
 PODS:
-  - VVLUT1DFilter (1.0.3)
+  - VVLUT1DFilter (1.0.5-pre)
 
 DEPENDENCIES:
   - VVLUT1DFilter (from `../`)

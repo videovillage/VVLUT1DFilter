@@ -70,7 +70,7 @@ kernel vec4 lut1DKernel(sampler src, __table sampler lut, float lutSize){
 
 + (CIKernel *)kernel{
     
-    return [CIKernel kernelWithString:kVVLUT1DFilterKernelString];
+    return [CIKernel kernelsWithString:kVVLUT1DFilterKernelString].firstObject;
 }
 
 @end

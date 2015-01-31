@@ -70,6 +70,9 @@ task :release do
   else
     sh "pod repo push #{repo} #{podspec_path}"
   end
+  #increment version number and add "-pre" to it and commit it
+  replace_version_number(next_version(spec_version).to_s + "-pre")
+  sh "git commit #{podspec_path} VERSION -m 'Pre-Release #{spec_version}' --allow-empty"
 end
 
 # @return [Pod::Version] The version as reported by the Podspec.

@@ -63,7 +63,7 @@ static CIKernel *lut1DKernel = nil;
     
     CISampler *inputSampler = [CISampler samplerWithImage: inputImage];
     CISampler *lutSampler = [CISampler samplerWithImage: lutImage options:@{kCISamplerFilterMode: kCISamplerFilterNearest,
-                                                                            kCISamplerWrapMode: kCISamplerWrapClamp}];
+                                                                            kCISamplerWrapMode: kCISamplerWrapBlack}];
     [lut1DKernel setROISelector:@selector(regionOf:destRect:)];
     
     NSArray * outputExtent = @[@(inputImage.extent.origin.x),

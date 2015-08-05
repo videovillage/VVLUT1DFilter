@@ -48,6 +48,13 @@ static CIKernel *lut1DKernel = nil;
 
 
 - (CIImage *)outputImage {
+    NSUInteger expectedByteSize = sizeof(float)*4*VVLUT1DFILTER_TEX_MAX_WIDTH*(int)ceil(inputSize.doubleValue/(double)VVLUT1DFILTER_TEX_MAX_WIDTH);
+
+    if (inputData.length != expectedByteSize) {
+        NSMutableData *newData = [NSMutableData dataWithData:inputData];
+        [newData setLength:expectedByteSize];
+        inputData = [NSData dataWithData:newData];
+    }
     CIImage *lutImage = [CIImage imageWithBitmapData:inputData
                                          bytesPerRow:sizeof(float)*4*VVLUT1DFILTER_TEX_MAX_WIDTH
                                                 size:CGSizeMake(VVLUT1DFILTER_TEX_MAX_WIDTH, (int)ceil(inputSize.doubleValue/(double)VVLUT1DFILTER_TEX_MAX_WIDTH))

@@ -27,10 +27,6 @@ static CIKernel *lut1DKernel = nil;
     [CIFilter registerFilterName:@"VVLUT1DFilter" constructor:(id <CIFilterConstructor>)self classAttributes:attributes];
 }
 
-+ (CIFilter *)filterWithName:(NSString *)name {
-    return [[self alloc] init];
-}
-
 - (id)init
 {
     self = [super init];

@@ -12,7 +12,7 @@
 #define STRINGIZE(x) #x
 #define STRINGIZE2(x) STRINGIZE(x)
 #define SHADER_STRING(text) @ STRINGIZE2(text)
-#define VVLUT1DFILTER_TEX_MAX_WIDTH 1024
+#define VVLUT1DFILTER_TEX_MAX_WIDTH 4096
 
 @interface VVLUT1DFilterKernel : NSObject
 

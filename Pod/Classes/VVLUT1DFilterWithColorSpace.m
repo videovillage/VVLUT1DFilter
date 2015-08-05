@@ -28,6 +28,10 @@ static CIKernel *lut1DKernel = nil;
     [CIFilter registerFilterName:@"VVLUT1DFilterWithColorSpace" constructor:(id <CIFilterConstructor>)self classAttributes:attributes];
 }
 
++ (CIFilter *)filterWithName:(NSString *)name {
+    return [[self alloc] init];
+}
+
 + (double)remapValue:(double)value
             inputLow:(double)inputLow
            inputHigh:(double)inputHigh

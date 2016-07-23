@@ -8,6 +8,10 @@
 
 #import "VVLUT1DFilterKernel.h"
 
+#define STRINGIZE(x) #x
+#define STRINGIZE2(x) STRINGIZE(x)
+#define SHADER_STRING(text) @ STRINGIZE2(text)
+
 NSString *const kVVLUT1DFilterKernelString = SHADER_STRING(
 float remapFloat(float value, float inputLow, float inputHigh, float outputLow, float outputHigh){
     return outputLow + ((value - inputLow)*(outputHigh - outputLow))/(inputHigh - inputLow);

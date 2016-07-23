@@ -31,19 +31,19 @@ vec2 indexToLUTCoordinate(int index){
     return vec2(x, y);
 }
                                                            
-float redValueAtLUTIndex(int index, sampler lut){
+float redValueAtLUTIndex(int index, __table sampler lut){
     return sample(lut, indexToLUTCoordinate(index)).r;
 }
                                                            
-float greenValueAtLUTIndex(int index, sampler lut){
+float greenValueAtLUTIndex(int index, __table sampler lut){
    return sample(lut, indexToLUTCoordinate(index)).g;
 }
 
-float blueValueAtLUTIndex(int index, sampler lut){
+float blueValueAtLUTIndex(int index, __table sampler lut){
     return sample(lut, indexToLUTCoordinate(index)).b;
 }
 
-kernel vec4 lut1DKernel(sampler src, sampler lut, float lutSize){
+kernel vec4 lut1DKernel(sampler src, __table sampler lut, float lutSize){
     vec4 inputColor = sample(src, samplerCoord(src));
     
     float redPoint = inputColor.r*(lutSize-1.0);

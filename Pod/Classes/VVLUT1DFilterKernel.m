@@ -12,6 +12,10 @@
 #define STRINGIZE2(x) STRINGIZE(x)
 #define SHADER_STRING(text) @ STRINGIZE2(text)
 
+#if true
+#undef ceil
+#undef floor
+
 NSString *const kVVLUT1DFilterKernelString = SHADER_STRING(
 float remapFloat(float value, float inputLow, float inputHigh, float outputLow, float outputHigh){
     return outputLow + ((value - inputLow)*(outputHigh - outputLow))/(inputHigh - inputLow);
@@ -25,9 +29,9 @@ float lerp1d(float beginning, float end, float value01) {
 //    return vec3(lerp1d(beginning.r, end.r, value01), lerp1d(beginning.g, end.g, value01), lerp1d(beginning.b, end.b, value01));
 //}
                                                            
-vec2 indexToLUTCoordinate(int index){
-    int x = int(mod(float(index),float(VVLUT1DFILTER_TEX_MAX_WIDTH)));
-    int y = int(index)/int(VVLUT1DFILTER_TEX_MAX_WIDTH);
+vec2 indexToLUTCoordinate(float index){
+    float x = mod(index,float(VVLUT1DFILTER_TEX_MAX_WIDTH));
+    float y =  floor(index/float(VVLUT1DFILTER_TEX_MAX_WIDTH));
     return vec2(x, y);
 }
                                                            
@@ -50,66 +54,33 @@ kernel vec4 lut1DKernel(sampler src, __table sampler lut, float lutSize){
     float greenPoint = inputColor.g*(lutSize-1.0);
     float bluePoint = inputColor.b*(lutSize-1.0);
     
-    int redBottomIndex = int(redPoint);
-    int redTopIndex = int(ceil(redPoint));
+    float redBottomIndex = floor(redPoint);
+    float redTopIndex = ceil(redPoint);
 
-    int greenBottomIndex = int(greenPoint);
-    int greenTopIndex = int(ceil(greenPoint));
+    float greenBottomIndex = floor(greenPoint);
+    float greenTopIndex = ceil(greenPoint);
 
-    int blueBottomIndex = int(bluePoint);
-    int blueTopIndex = int(ceil(bluePoint));
+    float blueBottomIndex = floor(bluePoint);
+    float blueTopIndex = ceil(bluePoint);
     
-    int x = 0;
-    int y = 0;
-    vec2 coordinate = vec2(0,0);
+    float redBottomIndexValue = sample(lut, indexToLUTCoordinate(redBottomIndex)).r;
     
-    x = int(mod(float(redBottomIndex),float(VVLUT1DFILTER_TEX_MAX_WIDTH)));
-    y = int(redBottomIndex)/int(VVLUT1DFILTER_TEX_MAX_WIDTH);
-    coordinate = vec2(x, y);
-    
-    float redBottomIndexValue = sample(lut, coordinate).r;
-    
-    x = int(mod(float(redTopIndex),float(VVLUT1DFILTER_TEX_MAX_WIDTH)));
-    y = int(redTopIndex)/int(VVLUT1DFILTER_TEX_MAX_WIDTH);
-    coordinate = vec2(x, y);
-    
-    float redTopIndexValue = sample(lut, coordinate).r;
+    float redTopIndexValue = sample(lut, indexToLUTCoordinate(redTopIndex)).r;
     
     float interpolatedRedValue = lerp1d(redBottomIndexValue, redTopIndexValue, redPoint - float(redBottomIndex));
     
-    x = int(mod(float(greenBottomIndex),float(VVLUT1DFILTER_TEX_MAX_WIDTH)));
-    y = int(greenBottomIndex)/int(VVLUT1DFILTER_TEX_MAX_WIDTH);
-    coordinate = vec2(x, y);
+    float greenBottomIndexValue = sample(lut, indexToLUTCoordinate(greenBottomIndex)).g;
     
-    float greenBottomIndexValue = sample(lut, coordinate).r;
-    
-    x = int(mod(float(greenTopIndex),float(VVLUT1DFILTER_TEX_MAX_WIDTH)));
-    y = int(greenTopIndex)/int(VVLUT1DFILTER_TEX_MAX_WIDTH);
-    coordinate = vec2(x, y);
-    
-    float greenTopIndexValue = sample(lut, coordinate).r;
+    float greenTopIndexValue = sample(lut, indexToLUTCoordinate(greenTopIndex)).g;
     
     float interpolatedGreenValue = lerp1d(greenBottomIndexValue, greenTopIndexValue, greenPoint - float(greenBottomIndex));
     
     
-    x = int(mod(float(blueBottomIndex),float(VVLUT1DFILTER_TEX_MAX_WIDTH)));
-    y = int(blueBottomIndex)/int(VVLUT1DFILTER_TEX_MAX_WIDTH);
-    coordinate = vec2(x, y);
+    float blueBottomIndexValue = sample(lut, indexToLUTCoordinate(blueBottomIndex)).b;
     
-    float blueBottomIndexValue = sample(lut, coordinate).r;
-    
-    x = int(mod(float(blueTopIndex),float(VVLUT1DFILTER_TEX_MAX_WIDTH)));
-    y = int(blueTopIndex)/int(VVLUT1DFILTER_TEX_MAX_WIDTH);
-    coordinate = vec2(x, y);
-    
-    float blueTopIndexValue = sample(lut, coordinate).r;
+    float blueTopIndexValue = sample(lut, indexToLUTCoordinate(blueTopIndex)).b;
     
     float interpolatedBlueValue = lerp1d(blueBottomIndexValue, blueTopIndexValue, bluePoint - float(blueBottomIndex));
-    
-    
-//    float interpolatedRedValue = lerp1d(redValueAtLUTIndex(redBottomIndex, lut), redValueAtLUTIndex(redTopIndex, lut), redPoint - float(redBottomIndex));
-//    float interpolatedGreenValue = lerp1d(greenValueAtLUTIndex(greenBottomIndex, lut), greenValueAtLUTIndex(greenTopIndex, lut), greenPoint - float(greenBottomIndex));
-//    float interpolatedBlueValue = lerp1d(blueValueAtLUTIndex(blueBottomIndex, lut), blueValueAtLUTIndex(blueTopIndex, lut), bluePoint - float(blueBottomIndex));
     
 
     return vec4(interpolatedRedValue, interpolatedGreenValue, interpolatedBlueValue, inputColor.a);
@@ -117,6 +88,7 @@ kernel vec4 lut1DKernel(sampler src, __table sampler lut, float lutSize){
 
 
 );
+#endif
 
 @implementation VVLUT1DFilterKernel
 
@@ -126,3 +98,5 @@ kernel vec4 lut1DKernel(sampler src, __table sampler lut, float lutSize){
 }
 
 @end
+
+

@@ -7,6 +7,7 @@
 //
 
 #import "VVLUT1DFilterKernel.h"
+#import <CoreImage/CoreImage.h>
 
 #define STRINGIZE(x) #x
 #define STRINGIZE2(x) STRINGIZE(x)

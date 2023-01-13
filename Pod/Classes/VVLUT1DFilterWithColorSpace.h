@@ -7,6 +7,7 @@
 //
 
 #import <QuartzCore/QuartzCore.h>
+#import <CoreImage/CoreImage.h>
 
 @interface VVLUT1DFilterWithColorSpace : CIFilter
 

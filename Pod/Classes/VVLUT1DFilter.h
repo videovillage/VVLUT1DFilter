@@ -6,6 +6,7 @@
 //  Copyright (c) 2014 Video Village. All rights reserved.
 //
 #import <QuartzCore/QuartzCore.h>
+#import <CoreImage/CoreImage.h>
 
 @interface VVLUT1DFilter : CIFilter
 
